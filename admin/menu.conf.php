@@ -7,7 +7,6 @@ return array(
 		'icon'=>'icon-cog', 
 		'tab'=> array (
 			'base'=>array('url'=>url('setting-base'), 'text'=>lang('admin_setting_base')),
-			'smtp'=>array('url'=>url('setting-smtp'), 'text'=>lang('admin_setting_smtp')),
 		)
 	),
 	'forum' => array(

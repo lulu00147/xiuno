@@ -53,7 +53,7 @@ function check_runlevel() {
 	global $conf, $method, $gid;
 	
 	$rules = array(
-		'user'=>array('login', 'create', 'logout', 'sendinitpw', 'resetpw', 'resetpw_sendcode', 'resetpw_complete', 'synlogin')
+		'user'=>array('login', 'create', 'logout', 'sendinitpw', 'synlogin')
 	);
 	
 	// hook model_check_runlevel_start.php

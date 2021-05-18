@@ -2,8 +2,6 @@
 
 !defined('DEBUG') AND exit('Access Denied.');
 
-include _include(XIUNOPHP_PATH.'xn_send_mail.func.php');
-
 $action = param(1);
 
 is_numeric($action) AND $action = '';
@@ -135,15 +133,6 @@ if(empty($action)) {
 		empty($username) AND message('username', lang('please_input_username'));
 		empty($password) AND message('password', lang('please_input_password'));
 
-		if($conf['user_create_email_on']) {
-			$sess_email = _SESSION('user_create_email');
-			$sess_code = _SESSION('user_create_code');
-			empty($sess_code) AND message('code', lang('click_to_get_verify_code'));
-			empty($sess_email) AND message('code', lang('click_to_get_verify_code'));
-			$email != $sess_email AND message('code', lang('verify_code_incorrect'));
-			$code != $sess_code AND message('code', lang('verify_code_incorrect'));
-		}
-
 		!is_email($email, $err) AND message('email', $err);
 		$_user = user_read_by_email($email);
 		$_user AND message('email', lang('email_is_in_use'));
@@ -199,164 +188,6 @@ if(empty($action)) {
 
 	message(0, jump(lang('logout_successfully'), http_referer(), 1));
 	//message(0, jump('退出成功', './', 1));
-
-// 重设密码第 1 步 | reset password first step
-} elseif($action == 'resetpw') {
-
-	// hook user_resetpw_get_post.php
-
-	!$conf['user_resetpw_on'] AND message(-1, '未开启密码找回功能！');
-
-	if($method == 'GET') {
-
-		// hook user_resetpw_get_start.php
-
-		$header['title'] = lang('resetpw');
-
-		// hook user_resetpw_get_end.php
-
-		include _include(APP_PATH.'view/htm/user_resetpw.htm');
-
-	} else if($method == 'POST') {
-
-		// hook user_resetpw_post_start.php
-
-		$email = param('email');
-		empty($email) AND message('email', lang('please_input_email'));
-		!is_email($email, $err) AND message('email', $err);
-
-		$_user = user_read_by_email($email);
-		!$_user AND message('email', lang('email_is_not_in_use'));
-
-		$code = param('code');
-		empty($code) AND message('code', lang('please_input_verify_code'));
-
-		$sess_email = _SESSION('user_resetpw_email');
-		$sess_code = _SESSION('user_resetpw_code');
-		empty($sess_code) AND message('code', lang('click_to_get_verify_code'));
-		empty($sess_email) AND message('code', lang('click_to_get_verify_code'));
-		$email != $sess_email AND message('code', lang('verify_code_incorrect'));
-		$code != $sess_code AND message('code', lang('verify_code_incorrect'));
-
-		$_SESSION['resetpw_verify_email'] = $sess_email;
-
-		// hook user_resetpw_post_end.php
-
-		message(0, lang('check_ok_to_next_step'));
-	}
-
-// 重设密码第 3 步 | reset password step 3
-} elseif($action == 'resetpw_complete') {
-
-	// hook user_resetpw_get_post.php
-
-	// 校验数据
-	$email = _SESSION('user_resetpw_email');
-	$resetpw_verify_email = _SESSION('resetpw_verify_email');
-	(empty($email) || empty($resetpw_verify_email)) AND message(-1, lang('data_empty_to_last_step'));
-
-	($resetpw_verify_email != $email) AND message(-1, lang('data_empty_to_last_step'));
-
-	$_user = user_read_by_email($email);
-	empty($_user) AND message(-1, lang('email_not_exists'));
-	$_uid = $_user['uid'];
-
-	if($method == 'GET') {
-
-		// hook user_resetpw_get_start.php
-
-		$header['title'] = lang('resetpw');
-
-		// hook user_resetpw_get_end.php
-
-		include _include(APP_PATH.'view/htm/user_resetpw_complete.htm');
-
-	} else if($method == 'POST') {
-
-		// hook user_resetpw_post_start.php
-
-		$password = param('password');
-		empty($password) AND message('password', lang('please_input_password'));
-
-		$salt = $_user['salt'];
-		$password = md5($password.$salt);
-
-		!is_password($password, $err) AND message('password', $err);
-		user_update($_uid, array('password'=>$password));
-
-		unset($_SESSION['user_resetpw_email']);
-		unset($_SESSION['user_resetpw_code']);
-		unset($_SESSION['resetpw_verify_ok']);
-
-		// hook user_resetpw_post_end.php
-
-		message(0, lang('modify_successfully'));
-
-	}
-
-// 发送验证码
-} elseif($action == 'send_code') {
-
-	$method != 'POST' AND message(-1, lang('method_error'));
-
-	// hook user_sendcode_start.php
-
-	$action2 = param(2);
-
-	// 创建用户
-	if($action2 == 'user_create') {
-
-		$email = param('email');
-
-		empty($email) AND message('email', lang('please_input_email'));
-		!is_email($email, $err) AND message('email', $err);
-		empty($conf['user_create_email_on']) AND message(-1, lang('email_verify_not_on'));
-		$_user = user_read_by_email($email);
-		!empty($_user) AND message('email', lang('email_is_in_use'));
-
-		$code = rand(100000, 999999);
-		$_SESSION['user_create_email'] = $email;
-		$_SESSION['user_create_code'] = $code;
-
-
-	// 重置密码，往老地址发送
-	} elseif($action2 == 'user_resetpw') {
-
-		$email = param('email');
-
-		empty($email) AND message('email', lang('please_input_email'));
-		!is_email($email, $err) AND message('email', $err);
-		$_user = user_read_by_email($email);
-		empty($_user) AND message('email', lang('email_is_not_in_use'));
-
-		empty($conf['user_resetpw_on']) AND message(-1, lang('resetpw_not_on'));
-
-		$code = rand(100000, 999999);
-		$_SESSION['user_resetpw_email'] = $email;
-		$_SESSION['user_resetpw_code'] = $code;
-
-	} else {
-		message(-1, 'action2 error');
-	}
-
-
-	$subject = lang('send_code_template', array('rand'=>$code, 'sitename'=>$conf['sitename']));
-	$message = $subject;
-
-	$smtplist = include _include(APP_PATH.'conf/smtp.conf.php');
-	$n = array_rand($smtplist);
-	$smtp = $smtplist[$n];
-
-	// hook user_send_code_before.php
-	$r = xn_send_mail($smtp, $conf['sitename'], $email, $subject, $message);
-	// hook user_send_code_after.php
-
-	if($r === TRUE) {
-		message(0, lang('send_successfully'));
-	} else {
-		xn_log($errstr, 'send_mail_error');
-		message(-1, $errstr);
-	}
 
 // 简单的同步登陆实现：| sync login implement simply
 /*

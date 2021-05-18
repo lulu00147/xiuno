@@ -762,7 +762,7 @@ $.xget = function(url, callback, retry) {
 					return callback(-1000, "xhr.responseText:"+xhr.responseText+', type:'+type);
 				} else {
 					return callback(-1001, "xhr.responseText:"+xhr.responseText+', type:'+type);
-					console.log("xhr.responseText:"+xhr.responseText+', type:'+type);
+					//console.log("xhr.responseText:"+xhr.responseText+', type:'+type);
 				}
 			}
 		}
@@ -842,7 +842,7 @@ $.xpost = function(url, postdata, callback, progress_callback) {
 				return callback(-1000, "xhr.responseText:"+xhr.responseText+', type:'+type);
 			} else {
 				return callback(-1001, "xhr.responseText:"+xhr.responseText+', type:'+type);
-				console.log("xhr.responseText:"+xhr.responseText+', type:'+type);
+				//console.log("xhr.responseText:"+xhr.responseText+', type:'+type);
 			}
 		}
 	});
@@ -1304,7 +1304,7 @@ xn.image_resize = function(file_base64_data, callback, options) {
 			// 将修改后的代码复制回画布中
 			ctx.putImageData(imagedata, 0, 0);
 	
-			//filetype = 'png';
+			filetype = 'png';
 			if(filetype == 'jpg') filetype = 'jpeg';
 			var s = canvas.toDataURL('image/'+filetype, qulity);
 			if(callback) callback(0, {width: width, height: height, data: s});

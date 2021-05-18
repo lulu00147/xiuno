@@ -7,7 +7,6 @@
 <?php $forumarr = G('forumarr');?>
 <?php $fid = G('fid');?>
 <?php $conf = G('conf');?>
-<?php $static_version = $conf['static_version'];?>
 				
 			<!--{hook footer_start.htm}-->
 		
@@ -45,7 +44,7 @@
 	var gid = <?php echo intval($gid);?>;
 	xn.options.water_image_url = '<?php echo $conf['logo_water_url'];?>';	// 水印图片 / watermark image
 	</script>
-	<script src="<?php echo $conf['view_url'];?>js/bbs.js<?php echo $static_version;?>"></script>
+	<script src="<?php echo $conf['view_url'];?>js/bbs.js"></script>
 	<!--{hook footer_js_after.htm}-->
 	
 </body>

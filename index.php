@@ -3,15 +3,6 @@
  * Copyright (C) xiuno.com
  */
 
-//xhprof_enable();
-
-//$_SERVER['REQUEST_URI'] = '/?user-login.htm';
-//$_SERVER['REQUEST_METHOD'] = 'POST';
-//$_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';
-//$_COOKIE['bbs_sid'] = 'e1d8c2790b9dd08267e6ea2595c3bc82';
-//$postdata = 'email=admin&password=c4ca4238a0b923820dcc509a6f75849b';
-//parse_str($postdata, $_POST);
-
 // 0: Production mode; 1: Developer mode; 2: Plugin developement mode;
 // 0: 线上模式; 1: 调试模式; 2: 插件开发模式;
 !defined('DEBUG') AND define('DEBUG', 0);

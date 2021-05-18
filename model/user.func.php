@@ -153,8 +153,10 @@ function user_read_by_email($email) {
 	global $g_static_users;
 	// hook model_user_read_by_email_start.php
 	$user = db_find_one('user', array('email'=>$email));
-	user_format($user);
-	$g_static_users[$user['uid']] = $user;
+	if ($user) {
+		user_format($user);
+		$g_static_users[$user['uid']] = $user;
+	}
 	// hook model_user_read_by_email_end.php
 	return $user;
 }
@@ -163,8 +165,10 @@ function user_read_by_username($username) {
 	global $g_static_users;
 	// hook model_user_read_by_username_start.php
 	$user = db_find_one('user', array('username'=>$username));
-	user_format($user);
-	$g_static_users[$user['uid']] = $user;
+	if ($user) {
+		user_format($user);
+		$g_static_users[$user['uid']] = $user;
+	}
 	// hook model_user_read_by_username_end.php
 	return $user;
 }
@@ -404,7 +408,6 @@ function user_http_referer() {
 		|| strpos($referer, 'user-logout.htm') !== FALSE 
 		|| strpos($referer, 'user-create.htm') !== FALSE 
 		|| strpos($referer, 'user-setpw.htm') !== FALSE 
-		|| strpos($referer, 'user-resetpw_complete.htm') !== FALSE
 	) {
 		$referer = './';
 	}

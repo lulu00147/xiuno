@@ -75,16 +75,6 @@ if($action == 'login') {
 	$info['HTTP_X_FORWARDED_FOR'] = _SERVER('HTTP_X_FORWARDED_FOR');
 	$info['REMOTE_ADDR'] = _SERVER('REMOTE_ADDR');
 	
-	
-	$stat = array();
-	$stat['threads'] = thread_count();
-	$stat['posts'] = post_count();
-	$stat['users'] = user_count();
-	$stat['attachs'] = attach_count();
-	$stat['disk_free_space'] = function_exists('disk_free_space') ? humansize(disk_free_space(APP_PATH)) : lang('unknown');
-	
-	$lastversion = get_last_version($stat);
-	
 	// hook admin_index_empty_end.php
 	
 	include _include(ADMIN_PATH.'view/htm/index.htm');
@@ -92,19 +82,5 @@ if($action == 'login') {
 }
 
 // hook admin_index_end.php
-
-function get_last_version($stat) {
-	global $conf, $time;
-	$last_version = kv_get('last_version');
-	if($time - $last_version > 86400) {
-		kv_set('last_version', $time);
-		$sitename = urlencode($conf['sitename']);
-		$sitedomain = urlencode(http_url_path());
-		$version = urlencode($conf['version']);
-		return '<script src="http://custom.xiuno.com/version.htm?sitename='.$sitename.'&sitedomain='.$sitedomain.'&users='.$stat['users'].'&threads='.$stat['threads'].'&posts='.$stat['posts'].'&version='.$version.'"></script>';
-	} else {
-		return '';
-	}
-}
 
 ?>

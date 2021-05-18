@@ -97,9 +97,7 @@ return array (
 	'attach_dir_save_rule' => 'Ymd',	// 附件存放规则，附件多用：Ymd，附件少：Ym
 	
 	'update_views_on' => 1,
-	'user_create_email_on' => 0,
 	'user_create_on' => 0,
-	'user_resetpw_on' => 0,
 	
 	'admin_bind_ip' => 0,		// 后台是否绑定 IP
 	
@@ -116,8 +114,7 @@ return array (
 	// 禁止插件
 	'disabled_plugin' => 0, 
 	  
-	'version' => '4.0.6.3',
-	'static_version' => '?1.0',
+	'version' => '4.0.6.6',
 	'installed' => 0,
 );
 ?>
