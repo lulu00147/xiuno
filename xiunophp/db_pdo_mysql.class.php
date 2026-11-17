@@ -42,8 +42,8 @@ class db_pdo_mysql {
 			$this->rconf = $this->conf['master'];
 		} else {
 			//$n = array_rand($this->conf['slaves']);
-			$arr = array_rand($this->conf['slaves'], 1);
-			$conf = $this->conf['slaves'][$arr[0]];
+			$n = array_rand($this->conf['slaves']);
+			$conf = $this->conf['slaves'][$n];
 			$this->rconf = $conf;
 			$this->rlink = $this->real_connect($conf['host'], $conf['user'], $conf['password'], $conf['name'], $conf['charset'], $conf['engine']);
 		}
