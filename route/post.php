@@ -161,8 +161,8 @@ if($action == 'create') {
 			empty($forum) AND message('fid', lang('forum_not_exists'));
 			
 			if($fid != $newfid) {
-				!forum_access_user($fid, $gid, 'allowthread') AND message(-1, lang('user_group_insufficient_privilege'));
-				$post['uid'] != $uid AND !forum_access_mod($fid, $gid, 'allowupdate') AND message(-1, lang('user_group_insufficient_privilege'));
+				!forum_access_user($newfid, $gid, 'allowthread') AND message(-1, lang('user_group_insufficient_privilege'));
+				$post['uid'] != $uid AND !forum_access_mod($newfid, $gid, 'allowupdate') AND message(-1, lang('user_group_insufficient_privilege'));
 				$arr['fid'] = $newfid;
 			}
 			if($subject != $thread['subject']) {
