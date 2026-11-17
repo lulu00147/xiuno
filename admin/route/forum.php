@@ -219,7 +219,7 @@ if(empty($action) || $action == 'list') {
 		message(-1, lang('forum_delete_thread_before_delete_forum'));
 	}
 	
-	$sublist = forum_find_son_list($forumlist, $_fid);
+	$sublist = function_exists('forum_find_son_list') ? forum_find_son_list($forumlist, $_fid) : array();
 	if(!empty($sublist)) {
 		message(-1, lang('forum_please_delete_sub_forum'));
 	}
