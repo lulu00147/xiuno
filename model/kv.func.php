@@ -36,7 +36,7 @@ function kv_delete($k) {
 // --------------------> kv + cache
 function kv_cache_get($k) {
 	$r = cache_get($k);
-	if($r === NULL) {
+	if($r === NULL || $r === FALSE) {
 		$r = kv_get($k);
 	}
 	return $r;

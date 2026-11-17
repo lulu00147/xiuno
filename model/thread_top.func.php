@@ -46,7 +46,7 @@ function thread_top_find_cache() {
 	// hook model_thread_top_find_cache_start.php
 	global $conf;
 	$threadlist = cache_get('thread_top_list');
-	if($threadlist === NULL) {
+	if($threadlist === NULL || $threadlist === FALSE) {
 		$threadlist = thread_top_find();
 		cache_set('thread_top_list', $threadlist);
 	} else {

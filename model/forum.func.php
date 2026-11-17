@@ -140,7 +140,7 @@ function forum_list_cache() {
 	
 	// hook model_forum_list_cache_start.php
 	
-	if($forumlist === NULL) {
+	if($forumlist === NULL || $forumlist === FALSE) {
 		$forumlist = forum_find();
 		cache_set('forumlist', $forumlist, 60);
 	}

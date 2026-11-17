@@ -229,7 +229,7 @@ function online_find_cache() {
 
 function online_list_cache() {
 	$onlinelist = cache_get('online_list');
-	if($onlinelist === NULL) {
+	if($onlinelist === NULL || $onlinelist === FALSE) {
 		$onlinelist = db_find('session', array('uid'=>array('>'=>0)), array('last_date'=>-1), 1, 500);
 		foreach($onlinelist as &$online) {
 			$user = user_read_cache($online['uid']);

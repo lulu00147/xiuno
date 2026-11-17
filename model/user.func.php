@@ -87,7 +87,7 @@ function user_read_cache($uid) {
 	
 	if(!in_array($conf['cache']['type'], array('mysql', 'pdo_mysql'))) {
 		$r = cache_get("user-$uid");
-		if($r === NULL) {
+		if($r === NULL || $r === FALSE) {
 			$r = user_read($uid);
 			cache_set("user-$uid", $r);
 		}
