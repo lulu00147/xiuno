@@ -1104,7 +1104,7 @@ function xn_url_parse($request_url) {
 function xn_url_add_arg($url, $k, $v) {
 	$pos = strpos($url, '.htm');
 	if($pos === FALSE) {
-		return strpos($url, '?') === FALSE ? $url."&$k=$v" :  $url."?$k=$v";
+		return strpos($url, '?') === FALSE ? $url."?$k=$v" : $url."&$k=$v";
 	} else {
 		return substr($url, 0, $pos).'-'.$v.substr($url, $pos);
 	}
