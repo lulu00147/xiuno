@@ -226,7 +226,8 @@ if(empty($action)) {
 		$s = xn_encrypt($s);
 
 		// 将 token 附加到 URL，跳转回去 | add token into URL, jump back
-		$url = xn_urldecode($return_url).'?token='.$s;
+		$sep = strpos($return_url, '?') === FALSE ? '?' : '&';
+		$url = xn_urldecode($return_url).$sep.'token='.$s;
 		//$url = xn_url_add_arg($return_url, 'token', $s);
 		http_location($url);
 	}
