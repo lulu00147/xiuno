@@ -393,7 +393,6 @@ function thread_list_access_filter(&$threadlist, $gid) {
 	
 	foreach($threadlist as $tid=>$thread) {
 		if(empty($forumlist[$thread['fid']]['accesson'])) continue;
-		if($thread['top'] > 0) continue;
 		if(!forum_access_user($thread['fid'], $gid, 'allowread')) {
 			unset($threadlist[$tid]);
 		}
