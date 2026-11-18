@@ -8,7 +8,7 @@
 
 // hook index_start.php
 
-$page = param(1, 1);
+$page = max(1, param(1, 1));
 $order = $conf['order_default'];
 $order != 'tid' AND $order = 'lastpid';
 $pagesize = $conf['pagesize'];

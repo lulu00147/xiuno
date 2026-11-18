@@ -4,7 +4,7 @@
 
 // hook forum_start.php
 $fid = param(1, 0);
-$page = param(2, 1);
+$page = max(1, param(2, 1));
 $orderby = param('orderby');
 $extra = array(); // 给插件预留
 

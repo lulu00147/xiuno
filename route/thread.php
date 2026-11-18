@@ -81,7 +81,7 @@ if($action == 'create') {
 	
 	// thread-{tid}-{page}-{keyword}.htm
 	$tid = param(1, 0);
-	$page = param(2, 1);
+	$page = max(1, param(2, 1));
 	$keyword = param(3);
 	$pagesize = $conf['postlist_pagesize'];
 	//$pagesize = 10;

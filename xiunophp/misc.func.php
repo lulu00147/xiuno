@@ -372,7 +372,7 @@ function pagination_tpl($url, $text, $active = '') {
 function pagination($url, $totalnum, $page, $pagesize = 20) {
 	$totalpage = ceil($totalnum / $pagesize);
 	if($totalpage < 2) return '';
-	$page = min($totalpage, $page);
+	$page = max(1, min($totalpage, $page));
 	$shownum = 5;	// 显示多少个页 * 2
 
 	$start = max(1, $page - $shownum);
@@ -399,7 +399,7 @@ function pagination($url, $totalnum, $page, $pagesize = 20) {
 function pager($url, $totalnum, $page, $pagesize = 20) {
 	$totalpage = ceil($totalnum / $pagesize);
 	if($totalpage < 2) return '';
-	$page = min($totalpage, $page);
+	$page = max(1, min($totalpage, $page));
 
 	$s = '';
 	$page > 1 AND $s .= '<li><a href="'.str_replace('{page}', $page-1, $url).'">上一页</a></li>';
