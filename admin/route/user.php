@@ -73,6 +73,8 @@ if(empty($action) || $action == 'list') {
 		// hook admin_user_create_post_start.php
 		
 		empty($email) AND message('email', lang('please_input_email'));
+		empty($username) AND message('username', lang('please_input_username'));
+		empty($password) AND message('password', lang('please_input_password'));
 		$email AND !is_email($email, $err) AND message('email', $err);
 		$username AND !is_username($username, $err) AND message('username', $err);
 
@@ -136,6 +138,9 @@ if(empty($action) || $action == 'list') {
 		
 		$old = user_read($_uid);
 		empty($old) AND message('username', lang('uid_not_exists'));
+		
+		empty($username) AND message('username', lang('please_input_username'));
+		!is_username($username, $err) AND message('username', $err);
 		
 		$email AND !is_email($email, $err) AND message(2, $err);
 		if($email AND $old['email'] != $email) {
