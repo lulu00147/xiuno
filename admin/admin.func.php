@@ -52,7 +52,6 @@ function admin_token_set() {
 	
 	// hook admin_token_set_start.php
 	
-	$admin_token = param('bbs_admin_token');
 	$s = "$longip	$time";
 	
 	$admin_token = xn_encrypt($s, $key);

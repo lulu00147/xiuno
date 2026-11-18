@@ -71,14 +71,15 @@ function form_hidden($name, $value) {
 	return $s;
 }
 
-function form_textarea($name, $value, $width = FALSE,  $height = FALSE) {
+function form_textarea($name, $value, $width = FALSE, $height = FALSE) {
 	$style = '';
-	if($width !== FALSE) {
-		is_numeric($width) AND $width .= 'px';
-		is_numeric($height) AND $height .= 'px';
-		$style = " style=\"width: $width; height: $height; \"";
+	if($width !== FALSE || $height !== FALSE) {
+		$stylearr = array();
+		$width !== FALSE AND $stylearr[] = 'width: '.(is_numeric($width) ? $width.'px' : $width);
+		$height !== FALSE AND $stylearr[] = 'height: '.(is_numeric($height) ? $height.'px' : $height);
+		$style = ' style="'.implode('; ', $stylearr).'"';
 	}
-	$s = "<textarea name=\"$name\" id=\"$name\" class=\"form-control\" $style>$value</textarea>";
+	$s = "<textarea name=\"$name\" id=\"$name\" class=\"form-control\"$style>$value</textarea>";
 	return $s;
 }
 

@@ -149,14 +149,7 @@ function arrlist_cond_orderby($arrlist, $cond = array(), $orderby = array(), $pa
 
 function array_assoc_slice($arrlist, $start, $length = 0) {
 	if(isset($arrlist[0])) return array_slice($arrlist, $start, $length);
-	$keys = array_keys($arrlist);
-	$keys2 = array_slice($keys, $start, $length);
-	$retlist = array();
-	foreach($keys2 as $key) {
-		$retlist[$key] = $arrlist[$key];
-	}
-
-	return $retlist;
+	return array_slice($arrlist, $start, $length, TRUE);
 }
 
 

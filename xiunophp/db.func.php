@@ -303,14 +303,13 @@ function db_orderby_to_sqladd($orderby) {
 function db_array_to_update_sqladd($arr) {
 	$s = '';
 	foreach($arr as $k=>$v) {
-		$v = addslashes($v);
 		$op = substr($k, -1);
 		if($op == '+' || $op == '-') {
 			$k = substr($k, 0, -1);
-			$v = (is_int($v) || is_float($v)) ? $v : "'$v'";
+			$v = (is_int($v) || is_float($v)) ? $v : "'".addslashes($v)."'";
 			$s .= "`$k`=$k$op$v,";
 		} else {
-			$v = (is_int($v) || is_float($v)) ? $v : "'$v'";
+			$v = (is_int($v) || is_float($v)) ? $v : "'".addslashes($v)."'";
 			$s .= "`$k`=$v,";
 		}
 	}
@@ -329,11 +328,8 @@ function db_array_to_insert_sqladd($arr) {
 	$keys = array();
 	$values = array();
 	foreach($arr as $k=>$v) {
-		$k = addslashes($k);
-		$v = addslashes($v);
-		$keys[] = '`'.$k.'`';
-		$v = (is_int($v) || is_float($v)) ? $v : "'$v'";
-		$values[] = $v;
+		$keys[] = '`'.addslashes($k).'`';
+		$values[] = (is_int($v) || is_float($v)) ? $v : "'".addslashes($v)."'";
 	}
 	$keystr = implode(',', $keys);
 	$valstr = implode(',', $values);

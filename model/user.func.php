@@ -418,8 +418,7 @@ function user_http_referer() {
 function user_auth_check($token) {
 	// hook user_auth_check_start.php
 	global $time;
-	$auth = param(2);
-	$s = decrypt($auth);
+	$s = xn_decrypt($token);
 	empty($s) AND message(-1, lang('decrypt_failed'));
 	$arr = explode('-', $s);
 	count($arr) != 3 AND message(-1, lang('encrypt_failed'));
