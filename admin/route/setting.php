@@ -40,8 +40,8 @@ if($action == 'base') {
 		$user_create_on = param('user_create_on', 0);
 		$url_rewrite_on = param('url_rewrite_on', 0);
 		$cdn_on = param('cdn_on', 0);
-		$pagesize = param('pagesize', 0);
-		$postlist_pagesize = param('postlist_pagesize', 0);
+		$pagesize = max(1, param('pagesize', 0));
+		$postlist_pagesize = max(1, param('postlist_pagesize', 0));
 		
 		$_lang = param('lang');
 		
