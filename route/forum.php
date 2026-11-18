@@ -29,6 +29,7 @@ $thread_list_from_default = 1;
 if($thread_list_from_default) {
 	$pagination = pagination(url("forum-$fid-{page}", $extra), $forum['threads'], $page, $pagesize);
 	$threadlist = thread_find_by_fid($fid, $page, $pagesize, $orderby);
+	thread_list_access_filter($threadlist, $gid);
 }
 
 $header['title'] = $forum['seo_title'] ? $forum['seo_title'] : $forum['name'].'-'.$conf['sitename'];
