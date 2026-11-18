@@ -168,7 +168,7 @@ function post_delete($pid) {
 // 此处有可能会超时
 function post_delete_by_tid($tid) {
 	// hook model_post_delete_by_tid_start.php
-	$postlist = post_find_by_tid($tid);
+	$postlist = post_find_by_tid($tid, 1, 1000000);
 	foreach($postlist as $post) {
 		post_delete($post['pid']);
 	}
