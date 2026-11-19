@@ -149,6 +149,8 @@ function thread_inc_views($tid, $n = 1) {
 	global $conf, $db;
 	$tablepre = $db->tablepre;
 	if(!$conf['update_views_on']) return TRUE;
+	$tid = intval($tid);
+	$n = intval($n);
 	$sqladd = !in_array($conf['cache']['type'], array('mysql', 'pdo_mysql')) ? '' : ' LOW_PRIORITY';
 	$r = db_exec("UPDATE$sqladd `{$tablepre}thread` SET views=views+$n WHERE tid='$tid'");
 	// hook model_thread_inc_views_end.php
