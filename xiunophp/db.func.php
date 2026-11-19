@@ -247,6 +247,9 @@ function db_cond_to_sqladd($cond) {
 			if(!is_array($v)) {
 				$v = (is_int($v) || is_float($v)) ? $v : "'".addslashes($v)."'";
 				$s .= "`$k`=$v AND ";
+			} elseif(empty($v)) {
+				// 空数组作为 IN 条件时，不应匹配任何行（否则会生成残缺的 WHERE）
+				$s .= '1=0 AND ';
 			} elseif(isset($v[0])) {
 				// OR 效率比 IN 高
 				$s .= '(';
