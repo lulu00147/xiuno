@@ -166,6 +166,7 @@ if($action == 'create') {
 				$arr['fid'] = $newfid;
 			}
 			if($subject != $thread['subject']) {
+				empty($subject) AND message('subject', lang('please_input_subject'));
 				mb_strlen($subject, 'UTF-8') > 80 AND message('subject', lang('subject_max_length', array('max'=>80)));
 				$arr['subject'] = $subject;
 			}
