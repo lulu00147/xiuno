@@ -127,6 +127,7 @@ function forum_access_user($fid, $gid, $access) {
 	// hook model_forum_access_user_start.php
 	global $conf, $grouplist, $forumlist;
 	if(empty($forumlist[$fid])) return FALSE;
+	if($gid == 1) return TRUE; // 管理员组拥有所有版块权限，与 forum_list_access_filter 保持一致
 	$group = $grouplist[$gid];
 	$forum = $forumlist[$fid];
 	if($forum['accesson']) {
