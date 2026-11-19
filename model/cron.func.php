@@ -14,7 +14,8 @@ function cron_run($force = 0) {
 	// 每隔 5 分钟执行一次的计划任务
 	if($t > 300 || $force) {
 		$lock = cache_get('cron_lock_1');
-		if($lock === NULL || $lock === FALSE) {
+		// FALSE 表示缓存不可用（无法加锁，也无法保存执行时间），NULL 才是未命中
+		if($lock === NULL) {
 			cache_set('cron_lock_1', 1, 10); // 设置 10 秒超时
 			
 			sess_gc($conf['online_hold_time']);
@@ -34,7 +35,7 @@ function cron_run($force = 0) {
 	if($t > 86400 || $force) {
 		
 		$lock = cache_get('cron_lock_2'); // 高并发下, mysql 机制实现的锁锁不住，但是没关系
-		if($lock === NULL || $lock === FALSE) {
+		if($lock === NULL) {
 			cache_set('cron_lock_2', 1, 10); // 设置 10 秒超时
 			
 			// 每日统计清 0
